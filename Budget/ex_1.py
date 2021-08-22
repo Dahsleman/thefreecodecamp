@@ -2,11 +2,15 @@ from __future__ import annotations
 
 class Category:
 
+
     def __init__(self,name:str):
         self.name = name
         self.ledger = list()
         self.funds = 0
         self.withdraws = 0
+
+    def __str__(self):
+      return self.print_essa_bosta()
 
     def deposit(self,amount:float,description:str = None) -> None:
         ledger_deposit = dict()
@@ -299,32 +303,46 @@ def bolinha(number_list:list) -> str:
             number_4 = num
 
     indice = [100,90,80,70,60,50,40,30,20,10,0]
-    grafico = f'Percentage spent by category'
+    grafico = f'Percentage spent by category\n'
     for num in indice:
-        if num == indice[0]:           
-            grafico += f'\n{num}|' + grafic(num,number,number_2,number_3,number_4)
-              
-        elif num == indice[10]:
-            grafico += f'\n  {num}|' + grafic(num,number,number_2,number_3,number_4)
 
-        else:
-            grafico += f'\n {num}|' + grafic(num,number,number_2,number_3,number_4)
+      grafico += f'{num:>3}|{grafic(num,number,number_2,number_3,number_4)}\n'
+      
+      if num == number:
+        number = number - 10
 
-        if num == number:
-            number = number - 10
+      if num == number_2:
+        number_2 = number_2 - 10
 
-        if num == number_2:
-            number_2 = number_2 - 10
+      if num == number_3:
+        number_3 = number_3 - 10
 
-        if num == number_3:
-            number_3 = number_3 - 10
-
-        if num == number_4:
-            number_4 = number_4 - 10
+      if num == number_4:
+        number_4 = number_4 - 10
 
     return grafico
 
-def create_spend_chart(category_1:Category,category_2:Category = None,category_3:Category = None,category_4:Category = None) -> str:
+def create_spend_chart(categories:list) -> str:
+    contador = 1
+    category_1 = None
+    category_2 = None
+    category_3 = None
+    category_4 = None
+    for category in categories:
+        if contador == 1:
+            category_1 = category
+            contador += 1 
+
+        elif contador == 2:
+            category_2 = category
+            contador += 1
+
+        elif contador == 3:
+            category_3 = category
+            contador += 1
+
+        elif contador == 4:
+            category_4 = category
 
     if not category_2 and category_3 and category_4:
         return f'{bolinha(percentual(category_1))}\n    -{vertically_category(category_1)}'
@@ -348,7 +366,7 @@ food.withdraw(15.89,'restaurant and more food for dessert')
 food.transfer(100.70,drink)
 food.total_withdraw()
 drink.withdraw(100)
-x = create_spend_chart(food,drink)
+x = create_spend_chart([food,drink])
 print(x)
 
 
